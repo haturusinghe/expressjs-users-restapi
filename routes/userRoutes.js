@@ -7,7 +7,7 @@ const router = express.Router();
 const authenticateToken = (req, res, next) => {
   const authHeader = req.header('Authorization');
   const token = authHeader && authHeader.split(' ')[1];
-  console.log(token);
+  // console.log(token);
   if (!token) return res.status(401).json({ message: 'Access denied. Token not provided.' });
 
   jwt.verify(token, '1999', (err, user) => {
@@ -44,7 +44,8 @@ router.post('/login', (req, res) => {
 
 router.get('/users', authenticateToken, (req, res) => {
   const { search } = req.query;
-  let query = 'SELECT * FROM users';
+  // console.log(search);
+  let query = 'SELECT name,email FROM users';
 
   if (search) {
     query += ` WHERE name LIKE '%${search}%' OR email LIKE '%${search}%'`;
